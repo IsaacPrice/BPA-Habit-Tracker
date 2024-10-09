@@ -1,0 +1,10 @@
+DELETE FROM Administrators;
+DELETE FROM UserBadges;
+DELETE FROM Badges;
+DELETE FROM Notifications;
+DELETE FROM Progress;
+DELETE FROM Goals;
+DELETE FROM Habits;
+DELETE FROM UserTeamRoles;
+DELETE FROM Teams;
+DELETE FROM Users;
