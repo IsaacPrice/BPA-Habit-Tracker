@@ -1,7 +1,7 @@
-INSERT INTO Users (Username, PasswordHash, Email) 
+INSERT INTO Users (FirstName, LastName, Username, UserPassword, Email) 
 VALUES 
-('JohnDoe', 'JohnDoe123', 'JohnDoe@gmail.com'),
-('JaneDoe', 'JaneDoe123', 'JaneDoe@gmail.com');
+('Isaac', 'Price', 'IsaacPrice', 'password', 'iprice25250@gmail.com'),
+('John', 'Doe', 'JohnDoe123', 'password', 'JohnDoe@gmail.com');
 
 INSERT INTO Teams (TeamName, TeamCaptainID) 
 VALUES 
