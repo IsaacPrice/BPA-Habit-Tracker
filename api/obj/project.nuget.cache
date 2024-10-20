@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "W70s/gLUf0jjqSHzOTSr6lm1fN4Lb9uVtOCQxfDxDCS3lqPJb1gK4+pZ1rpsHzIZqgFdSfM17bIJ0LpsoGLVUQ==",
+  "dgSpecHash": "zNGFsh8EH7irLdNkEirCozfodH6bHdo5pXmyoKcd9d3/ev8pl4U2rJklkOdzGmK/wVUJKD+unvYMi+vTKlNYkg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Isaac\\Programs\\BPA-Habit-Tracker\\api\\HabitTrackerAPI.csproj",
+  "projectFilePath": "c:\\Users\\Isaac\\Programs\\BPA-Habit-Tracker\\api\\HabitTrackerAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Isaac\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Isaac\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
