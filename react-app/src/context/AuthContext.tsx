@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { LoginResponse, UserLogin } from '../api/client';
+import { LoginResponse, RegisterResponse, User, UserLogin } from '../api/client';
 import APIClientFactory from '../api/APIClientFactory';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 type AuthContextType =
 {
     sessionToken: string | undefined;
-    login: (username: string, password: string) => Promise<void>;
+    login: (username: string, password: string) => Promise<string | void>;
+    register: (registerRequest: User) => Promise<string | void>;
 }
 
 
@@ -35,11 +36,11 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
 
-    const login = async (username: string, password: string) => 
+    const login = async (username: string, password: string): Promise<string | void> => 
     {
         const loginRequest = UserLogin.fromJS({ username, password });
 
-        APIClientFactory
+        await APIClientFactory
             .getInstance()
             .login(loginRequest)
             .then((response: LoginResponse) => 
@@ -48,16 +49,44 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 {
                     setSessionToken(response.token);
                     localStorage.setItem('sessionToken', response.token);
+                    navigate('/');
                 }
             })
-            .catch((error: any) => console.log(error));
+            .catch((error: any) => 
+            {
+                console.log(error);
+            });
 
-        navigate('/');
+        return "Invalid username or password";
     };
 
 
+    const register = async (registerRequest: User): Promise<string | void> =>
+    {
+        await APIClientFactory
+            .getInstance()
+            .register(registerRequest)
+            .then((response: RegisterResponse) => 
+            {
+                if (response.token) 
+                {
+                    setSessionToken(response.token);
+                    localStorage.setItem('sessionToken', response.token);
+                    navigate('/');
+                }
+
+            })
+            .catch((error: any) => 
+            {
+                console.log(error);
+            });
+
+        return "Username already exists";
+    }
+
+
     return (
-        <AuthContext.Provider value={{ sessionToken, login }}>
+        <AuthContext.Provider value={{ sessionToken, login, register }}>
             {children}
         </AuthContext.Provider>
     );
