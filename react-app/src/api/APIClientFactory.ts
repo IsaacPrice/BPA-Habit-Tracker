@@ -1,5 +1,6 @@
 import { Client } from './client';
 
+
 class APIClientFactory 
 {
     private static instance: Client;
@@ -8,7 +9,8 @@ class APIClientFactory
     {
         if (!APIClientFactory.instance) 
         {
-            APIClientFactory.instance = new Client('https://localhost:7058');
+            APIClientFactory.instance = new Client('http://localhost:5280');
+
         }
         return APIClientFactory.instance;
     }

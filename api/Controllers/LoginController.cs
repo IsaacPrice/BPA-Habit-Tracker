@@ -1,14 +1,16 @@
 using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class LoginController : ControllerBase
     {
         private readonly DataBaseContext _context;
@@ -44,7 +46,7 @@ namespace API.Controllers
                 return Unauthorized();
             }
 
-            var token = GenerateToken(user);
+            var token = GenerateJwtToken(user);
             return Ok(new LoginResponse{ Token = token });
         }
 
@@ -63,13 +65,29 @@ namespace API.Controllers
             _context.Users.Add(newUser);
             _context.SaveChanges();
 
-            var token = GenerateToken(newUser);
+            var token = GenerateJwtToken(newUser);
             return Ok(new RegisterResponse { Token = token });
         }
 
-        private string GenerateToken(User user)
+        private string GenerateJwtToken(User user)
         {
-            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("68PUN6mq5d7RXePR2YQY7TuwuwueUPmh"));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: "yourIssuer",
+                audience: "yourAudience",
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

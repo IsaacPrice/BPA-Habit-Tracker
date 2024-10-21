@@ -23,7 +23,7 @@ export class Client {
      * @return OK
      */
     login(body: UserLogin | undefined): Promise<LoginResponse> {
-        let url_ = this.baseUrl + "/api/Login/login";
+        let url_ = this.baseUrl + "/Login/login";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -65,7 +65,7 @@ export class Client {
      * @return OK
      */
     register(body: User | undefined): Promise<RegisterResponse> {
-        let url_ = this.baseUrl + "/api/Login/register";
+        let url_ = this.baseUrl + "/Login/register";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -100,6 +100,205 @@ export class Client {
             });
         }
         return Promise.resolve<RegisterResponse>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    createTeam(body: Team | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/Team/CreateTeam";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCreateTeam(_response);
+        });
+    }
+
+    protected processCreateTeam(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return OK
+     */
+    readTeam(id: number): Promise<Team> {
+        let url_ = this.baseUrl + "/Team/ReadTeam/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processReadTeam(_response);
+        });
+    }
+
+    protected processReadTeam(response: Response): Promise<Team> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Team.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Team>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    updateTeam(id: number, body: Team | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/Team/UpdateTeam/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUpdateTeam(_response);
+        });
+    }
+
+    protected processUpdateTeam(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return OK
+     */
+    deleteTeam(id: number): Promise<void> {
+        let url_ = this.baseUrl + "/Team/DeleteTeam/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDeleteTeam(_response);
+        });
+    }
+
+    protected processDeleteTeam(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return OK
+     */
+    enumerateTeam(): Promise<Team[]> {
+        let url_ = this.baseUrl + "/Team/EnumerateTeam";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processEnumerateTeam(_response);
+        });
+    }
+
+    protected processEnumerateTeam(response: Response): Promise<Team[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Team.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Team[]>(null as any);
     }
 }
 
@@ -175,6 +374,54 @@ export interface IRegisterResponse {
     token: string | undefined;
 }
 
+export class Team implements ITeam {
+    teamID?: number;
+    teamName!: string | undefined;
+    teamCaptainID?: number | undefined;
+    createdAt?: Date | undefined;
+
+    constructor(data?: ITeam) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.teamID = _data["teamID"];
+            this.teamName = _data["teamName"];
+            this.teamCaptainID = _data["teamCaptainID"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Team {
+        data = typeof data === 'object' ? data : {};
+        let result = new Team();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["teamID"] = this.teamID;
+        data["teamName"] = this.teamName;
+        data["teamCaptainID"] = this.teamCaptainID;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface ITeam {
+    teamID?: number;
+    teamName: string | undefined;
+    teamCaptainID?: number | undefined;
+    createdAt?: Date | undefined;
+}
+
 export class User implements IUser {
     userId?: number;
     firstName!: string | undefined;
@@ -182,6 +429,8 @@ export class User implements IUser {
     username!: string | undefined;
     email!: string | undefined;
     userPassword!: string | undefined;
+    createdAt?: Date;
+    lastLoginAt?: Date | undefined;
 
     constructor(data?: IUser) {
         if (data) {
@@ -200,6 +449,8 @@ export class User implements IUser {
             this.username = _data["username"];
             this.email = _data["email"];
             this.userPassword = _data["userPassword"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.lastLoginAt = _data["lastLoginAt"] ? new Date(_data["lastLoginAt"].toString()) : <any>undefined;
         }
     }
 
@@ -218,6 +469,8 @@ export class User implements IUser {
         data["username"] = this.username;
         data["email"] = this.email;
         data["userPassword"] = this.userPassword;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["lastLoginAt"] = this.lastLoginAt ? this.lastLoginAt.toISOString() : <any>undefined;
         return data;
     }
 }
@@ -229,6 +482,8 @@ export interface IUser {
     username: string | undefined;
     email: string | undefined;
     userPassword: string | undefined;
+    createdAt?: Date;
+    lastLoginAt?: Date | undefined;
 }
 
 export class UserLogin implements IUserLogin {
@@ -276,7 +531,7 @@ export interface IUserLogin {
 }
 
 export class ApiException extends Error {
-    override message: string;
+    message: string;
     status: number;
     response: string;
     headers: { [key: string]: any; };
