@@ -81,8 +81,8 @@ namespace API.Controllers
             };
 
             var token = new JwtSecurityToken(
-                issuer: "yourIssuer",
-                audience: "yourAudience",
+                issuer: "https://localhost:7058",
+                audience: "https://localhost:3000",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials);

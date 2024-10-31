@@ -1,15 +1,15 @@
-import { Client } from './client';
+import { APIClient } from './client';
 
 
 class APIClientFactory 
 {
-    private static instance: Client;
+    private static instance: APIClient;
 
-    public static getInstance(): Client 
+    public static getInstance(): APIClient 
     {
         if (!APIClientFactory.instance) 
         {
-            APIClientFactory.instance = new Client('http://localhost:5280');
+            APIClientFactory.instance = new APIClient('https://localhost:7058');
 
         }
         return APIClientFactory.instance;

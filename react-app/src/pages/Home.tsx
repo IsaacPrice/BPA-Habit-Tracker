@@ -7,14 +7,17 @@ import { Team } from '../api/client';
 const Home: React.FC = () => 
 {
 	useEffect(() => {
-		APIClientFactory
-		    .getInstance()
-			.enumerateTeam()
-			.then((response: Team[]) => 
-			{
-				console.log(response);
-			})
-			.catch((error: any) => console.error("Error creating team", error));
+		const token = sessionStorage.getItem('sessionToken');
+		fetch('http://localhost:5280/Team/EnumerateTeam', {
+			method: 'GET',
+			credentials: 'include', // This ensures cookies and other credentials are sent
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(error => console.error('Error:', error));
 	}, []);
 
 

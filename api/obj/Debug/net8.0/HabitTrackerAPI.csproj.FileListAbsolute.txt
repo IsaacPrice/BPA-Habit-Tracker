@@ -143,3 +143,5 @@ C:\Users\Isaac\Programs\BPA-Habit-Tracker\api\obj\Debug\net8.0\HabitTrackerAPI.p
 C:\Users\Isaac\Programs\BPA-Habit-Tracker\api\obj\Debug\net8.0\HabitTrackerAPI.genruntimeconfig.cache
 C:\Users\Isaac\Programs\BPA-Habit-Tracker\api\obj\Debug\net8.0\ref\HabitTrackerAPI.dll
 c:\Users\Isaac\Programs\BPA-Habit-Tracker\api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+c:\Users\Isaac\Programs\BPA-Habit-Tracker\api\bin\Debug\net8.0\Microsoft.AspNetCore.Authorization.dll
+c:\Users\Isaac\Programs\BPA-Habit-Tracker\api\bin\Debug\net8.0\Microsoft.AspNetCore.Metadata.dll

@@ -8,6 +8,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class TeamController : ControllerBase
     {
         private readonly DataBaseContext _context;
